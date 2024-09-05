@@ -34,7 +34,7 @@ jobs:
 
     - name: Run textlint
       run: |
-        npx textlint -f checkstyle "./**/*.md" >> .textlint.log
+        npx textlint -f checkstyle "/**/*.md" >> .textlint.log
 
     - name: Report results with reviewdog
       env:
