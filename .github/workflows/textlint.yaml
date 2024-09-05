@@ -32,13 +32,12 @@ jobs:
       with:
         reviewdog_version: latest
 
-    - name: Run textlint and convert output to checkstyle format
+    - name: Run textlint and report with reviewdog
       run: |
-        npx textlint "**/*.md" --format checkstyle > textlint-report.xml
-
-    - name: Run reviewdog
-      run: |
-        reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-review -level=warning < textlint-report.xml
+        npx textlint "**/*.md" -f checkstyle | reviewdog -f=textlint \
+          -name="textlint" \
+          -reporter=github-pr-review \
+          -level=warning
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
