@@ -34,7 +34,7 @@ jobs:
 
     - name: Run textlint and convert output to checkstyle format
       run: |
-        npx textlint "**/*.md" --formatter checkstyle > textlint-report.xml
+        npx textlint "**/*.md" --format checkstyle > textlint-report.xml
 
     - name: Run reviewdog
       run: |
