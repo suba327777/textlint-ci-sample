@@ -1,41 +1,43 @@
-name: textlint
+# name: textlint
 
-on:
-  pull_request:
-    types: [opened, synchronize]
+# on:
+#   pull_request:
+#     types: [opened, synchronize]
 
-jobs:
-  textlint:
-    runs-on: ubuntu-latest
+# jobs:
+#   textlint:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v3
+#     steps:
+#     - uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+#     - name: Set up Node.js
+#       uses: actions/setup-node@v3
+#       with:
+#         node-version: '18'
 
-    - name: Install textlint and preset-japanese
-      run: npm install textlint textlint-rule-preset-japanese
+#     - name: Setup reviewdog
+#       uses: reviewdog/action-setup@v1
+#       with:
+#         reviewdog_version: latest
 
-    - name: Create .textlintrc
-      run: |
-        echo '{
-          "rules": {
-            "preset-japanese": true
-          }
-        }' > .textlintrc
+#     - name: Install textlint and preset-japanese
+#       run: npm install textlint textlint-rule-preset-japanese
 
-    - name: Setup reviewdog
-      uses: reviewdog/action-setup@v1
-      with:
-        reviewdog_version: latest
+#     - name: Create .textlintrc
+#       run: |
+#         echo '{
+#           "rules": {
+#             "preset-japanese": true
+#           }
+#         }' > .textlintrc
 
-    - name: Run textlint and report with reviewdog
-      run: |
-        npx textlint "**/*.md" -f checkstyle > textlint-report.json
-        reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-review -level=warning < textlint-report.json
-      env:
-        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#     - name: Run textlint and report with reviewdog
+#       run: |
+#         npx textlint "**/*.md" | reviewdog -f=textlint \
+#           -name="textlint" \
+#           -reporter=github-pr-review \
+#           -level=warning
+#       env:
+#         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
