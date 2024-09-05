@@ -30,14 +30,15 @@ jobs:
     - name: setup reviewdog
       uses: reviewdog/action-setup@v1
       with:
-          reviewdog_version: latest
+        reviewdog_version: latest
 
-    - name: Run textlint and report with reviewdog
+    - name: Run textlint and convert output to checkstyle format
       run: |
-        npx textlint "**/*.md" | reviewdog -f=textlint \
-          -name="textlint" \
-          -reporter=github-pr-review \
-          -level=warning
+        npx textlint "**/*.md" --formatter checkstyle > textlint-report.xml
+
+    - name: Run reviewdog
+      run: |
+        reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-review -level=warning < textlint-report.xml
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
