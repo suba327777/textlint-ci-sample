@@ -32,13 +32,13 @@ jobs:
           }
         }' > .textlintrc
 
-    # - name: Run textlint
-    #   run: |
-    #     npx textlint -f checkstyle "./**/*.md" >> .textlint.log
-
     - name: Run textlint
       run: |
         npx textlint -f checkstyle "./**/*.md" >> .textlint.log
+
+    # - name: Run textlint
+    #   run: |
+    #     npx textlint -f checkstyle "./**/*.md" >> .textlint.log
 
     - name: Show textlint.log output
       run: |
