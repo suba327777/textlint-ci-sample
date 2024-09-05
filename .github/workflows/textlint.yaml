@@ -28,5 +28,6 @@ jobs:
         }' > .textlintrc
 
     - name: Run textlint
-      run: npx textlint ./test.txt
+      run: npx textlint "**/*.md"
+
 
