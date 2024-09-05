@@ -27,6 +27,11 @@ jobs:
           }
         }' > .textlintrc
 
+    - name: setup reviewdog
+      uses: reviewdog/action-setup@v1
+      with:
+          reviewdog_version: latest
+
     - name: Run textlint and report with reviewdog
       run: |
         npx textlint "**/*.md" | reviewdog -f=textlint \
