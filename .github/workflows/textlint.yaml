@@ -32,12 +32,14 @@ jobs:
           }
         }' > .textlintrc
 
-    - name: Run textlint and report with reviewdog
+    - name: Run textlint
       run: |
-        npx textlint "**/*.md" | reviewdog -f=textlint \
-          -name="textlint" \
-          -reporter=github-pr-review \
-          -level=warning
+        npx textlint -f checkstyle "**/*.md >> .textlint.log
+
+    - name: Report results with reviewdog
+      if: failure()
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        cat .textlint.log | reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-review -level=warning
 
