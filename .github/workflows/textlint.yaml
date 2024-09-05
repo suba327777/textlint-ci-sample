@@ -27,17 +27,15 @@ jobs:
           }
         }' > .textlintrc
 
-    - name: setup reviewdog
+    - name: Setup reviewdog
       uses: reviewdog/action-setup@v1
       with:
         reviewdog_version: latest
 
     - name: Run textlint and report with reviewdog
       run: |
-        npx textlint "**/*.md" -f checkstyle | reviewdog -f=textlint \
-          -name="textlint" \
-          -reporter=github-pr-review \
-          -level=warning
+        npx textlint "**/*.md" -f checkstyle > textlint-report.xml
+        reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-review -level=warning < textlint-report.xml
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
