@@ -1,0 +1,26 @@
+name: textlint
+
+on:
+  pull_request:
+    types:[opened,synchronize]
+
+jobs:
+  textlint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install textlint
+      run: npm install -g textlint textlint-rule-preset-japanese
+
+    - name: Create .textlintrc
+      run: echo '{ "rules": { "preset-japanese": true } }' > .textlintrc
+
+    - name: Run textlint
+      run: textlint "**/*.md"
