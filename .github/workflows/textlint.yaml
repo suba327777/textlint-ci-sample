@@ -16,11 +16,16 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Install textlint
-      run: npm install -g textlint textlint-rule-preset-japanese
+    - name: Install textlint and preset-japanese
+      run: npx textlint --init && npm install textlint textlint-rule-preset-japanese
 
     - name: Create .textlintrc
-      run: echo '{ "rules": { "preset-japanese": true } }' > .textlintrc
+      run: |
+        echo '{
+          "rules": {
+            "preset-japanese": true
+          }
+        }' > .textlintrc
 
     - name: Run textlint
-      run: textlint "**/*.md"
+      run: npx textlint "**/*.md"
