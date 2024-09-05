@@ -27,7 +27,12 @@ jobs:
           }
         }' > .textlintrc
 
-    - name: Run textlint
-      run: npx textlint "**/*.md"
-
+    - name: Run textlint and report with reviewdog
+      run: |
+        npx textlint "**/*.md" | reviewdog -f=textlint \
+          -name="textlint" \
+          -reporter=github-pr-review \
+          -level=warning
+      env:
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
