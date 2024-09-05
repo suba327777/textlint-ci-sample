@@ -34,8 +34,8 @@ jobs:
 
     - name: Run textlint and report with reviewdog
       run: |
-        npx textlint "**/*.md" -f checkstyle > textlint-report.xml
-        reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-review -level=warning < textlint-report.xml
+        npx textlint "**/*.md" -f checkstyle > textlint-report.json
+        reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-review -level=warning < textlint-report.json
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
