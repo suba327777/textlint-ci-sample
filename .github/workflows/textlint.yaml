@@ -16,30 +16,16 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Setup reviewdog
-      uses: reviewdog/action-setup@v1
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Install textlint
+      run:  "npm install --save-dev textlint textlint-rule-preset-japanese"
+
+    - name: textlint-github-pr-review
+      uses: tsuyoshicho/action-textlint@v3
       with:
-        reviewdog_version: latest
-
-    - name: Install textlint and preset-japanese
-      run: npm install textlint textlint-rule-preset-japanese
-
-    - name: Create .textlintrc
-      run: |
-        echo '{
-          "rules": {
-            "preset-japanese": true
-          }
-        }' >> .textlintrc
-
-    - name: Run textlint
-      run: |
-        npx textlint "**/*.md" 2>&1 | tee .textlint.log
-        if [ -s .textlint.log ]; then
-          echo "textlint found issues."
-          exit 1
-        else
-          echo "No issues found by textlint."
-        fi
-
-    
+        github_token: ${{ secrets.github_token }}
+        reporter: github-pr-review
+        level: warning
+        textlint_flags: "./**/*.md"
