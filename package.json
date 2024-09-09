@@ -1,0 +1,15 @@
+{
+  "name": "textlint",
+  "version": "1.0.0",
+  "description": "<!-- APIの場合で認可を行いたいが、場合、ががはOAuth、理容、すればいいと思い、ます -->",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "textlint": "^14.2.0",
+    "textlint-rule-preset-japanese": "^10.0.3"
+  }
+}
