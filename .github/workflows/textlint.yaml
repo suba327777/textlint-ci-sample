@@ -19,9 +19,6 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
-    - name: Install textlint
-      run:  "npm install --save-dev textlint textlint-rule-preset-japanese"
-
     - name: textlint-github-pr-review
       uses: tsuyoshicho/action-textlint@v3
       with:
